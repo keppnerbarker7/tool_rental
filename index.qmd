@@ -1,0 +1,16 @@
+# Tool Rental App
+
+Welcome to the Tool Rental App documentation.
+
+## Overview
+
+This application provides a comprehensive tool rental management system.
+
+## Documentation Structure
+
+- [Documentation](docs/) - Technical documentation and guides
+- [Specifications](specs/) - Feature specifications and requirements
+
+## Getting Started
+
+Coming soon...

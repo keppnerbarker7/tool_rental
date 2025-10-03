@@ -1,0 +1,23 @@
+project:
+  type: website
+  title: "Tool Rental App Documentation"
+
+website:
+  title: "Tool Rental App"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: docs/
+        text: Documentation
+      - href: specs/
+        text: Specifications
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+execute:
+  freeze: auto
