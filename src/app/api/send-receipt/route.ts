@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY!)
+// Initialize Resend only when needed to avoid build errors
+function getResend() {
+  if (!process.env.RESEND_API_KEY) {
+    throw new Error('RESEND_API_KEY is not configured')
+  }
+  return new Resend(process.env.RESEND_API_KEY)
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -22,6 +28,7 @@ export async function POST(request: NextRequest) {
     console.log('📧 Attempting to send email to:', customerEmail)
     console.log('🔑 Using Resend API key:', process.env.RESEND_API_KEY ? 'Present' : 'Missing')
 
+    const resend = getResend()
     const data = await resend.emails.send({
       from: 'Tool Locker Utah Valley <noreply@toollocker.com>',
       to: [customerEmail],
