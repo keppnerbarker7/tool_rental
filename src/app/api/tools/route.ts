@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 import { seedTools } from '@/lib/seed-data'
+import crypto from 'crypto'
 
 // GET /api/tools - Get all tools
 export async function GET() {
   try {
+    const supabase = getSupabase()
     const { data, error } = await supabase
       .from('tools')
       .select('*')
@@ -59,6 +61,7 @@ export async function POST(request: NextRequest) {
       updated_at: new Date().toISOString()
     }
 
+    const supabase = getSupabase()
     const { data, error } = await supabase
       .from('tools')
       .insert([toolData])

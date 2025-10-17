@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { getSupabase } from '@/lib/supabase'
 
 // GET /api/tools/[id] - Get single tool
 export async function GET(
@@ -9,6 +9,7 @@ export async function GET(
   try {
     const { id } = await params
 
+    const supabase = getSupabase()
     const { data, error } = await supabase
       .from('tools')
       .select('*')
@@ -60,6 +61,7 @@ export async function PUT(
       updated_at: new Date().toISOString()
     }
 
+    const supabase = getSupabase()
     const { data, error } = await supabase
       .from('tools')
       .update(toolData)
@@ -90,6 +92,7 @@ export async function DELETE(
   try {
     const { id } = await params
 
+    const supabase = getSupabase()
     const { error } = await supabase
       .from('tools')
       .delete()
