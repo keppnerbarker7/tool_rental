@@ -1,16 +1,19 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+
+// Prevent static generation for this auth-dependent page
+export const dynamic = 'force-dynamic'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { useAdminAuth } from '@/contexts/admin-auth'
+import { useAdminAuth, AdminAuthProvider } from '@/contexts/admin-auth'
 import { Lock, Eye, EyeOff, Shield, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
-export default function AdminLoginPage() {
+function AdminLoginContent() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -129,5 +132,13 @@ export default function AdminLoginPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function AdminLoginPage() {
+  return (
+    <AdminAuthProvider>
+      <AdminLoginContent />
+    </AdminAuthProvider>
   )
 }

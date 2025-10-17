@@ -2,6 +2,9 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+
+// Prevent static generation for this search params-dependent page
+export const dynamic = 'force-dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Elements } from '@stripe/react-stripe-js'

@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { UserButton, useUser } from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -11,12 +10,30 @@ import {
   Calendar,
   Users,
   Settings,
-  Home
+  Home,
+  User
 } from 'lucide-react'
+
+// Safe hook to use Clerk only when available
+function useClerkSafely() {
+  const isClerkAvailable = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+  if (!isClerkAvailable) {
+    return { isAvailable: false, user: null }
+  }
+
+  try {
+    const { useUser } = require('@clerk/nextjs')
+    const { user } = useUser()
+    return { isAvailable: true, user }
+  } catch (error) {
+    return { isAvailable: false, user: null }
+  }
+}
 
 export function AdminNavigation() {
   const pathname = usePathname()
-  const { user } = useUser()
+  const { isAvailable, user } = useClerkSafely()
 
   const navigation = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
@@ -51,14 +68,33 @@ export function AdminNavigation() {
                 View Site
               </Link>
             </Button>
-            <UserButton
-              afterSignOutUrl="/"
-              appearance={{
-                elements: {
-                  avatarBox: "h-8 w-8"
+            {isAvailable ? (
+              (() => {
+                try {
+                  const { UserButton } = require('@clerk/nextjs')
+                  return (
+                    <UserButton
+                      afterSignOutUrl="/"
+                      appearance={{
+                        elements: {
+                          avatarBox: "h-8 w-8"
+                        }
+                      }}
+                    />
+                  )
+                } catch (error) {
+                  return (
+                    <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                      <User className="h-4 w-4 text-gray-600" />
+                    </div>
+                  )
                 }
-              }}
-            />
+              })()
+            ) : (
+              <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
+                <User className="h-4 w-4 text-gray-600" />
+              </div>
+            )}
           </div>
         </div>
       </header>

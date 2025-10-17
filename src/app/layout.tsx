@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
 import { OfflineIndicator } from '@/components/ui/offline-indicator'
-import { Header } from '@/components/layout/header'
+import { Header } from '@/components/layout/header-server'
 import { Footer } from '@/components/layout/footer'
 import './globals.css'
 
@@ -79,32 +79,30 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // Only use ClerkProvider if we have the publishable key
   const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
   const content = (
-    <html lang="en">
-      <body>
-        <OfflineIndicator />
-        <div className="min-h-screen flex flex-col">
-          <Header />
-          <main className="flex-1">
-            {children}
-          </main>
-          <Footer />
-        </div>
-      </body>
-    </html>
+    <body>
+      <OfflineIndicator />
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="flex-1">
+          {children}
+        </main>
+        <Footer />
+      </div>
+    </body>
   )
 
-  if (clerkPublishableKey) {
-    return (
-      <ClerkProvider publishableKey={clerkPublishableKey}>
-        {content}
-      </ClerkProvider>
-    )
-  }
-
-  // Return content without Clerk if key is not available
-  return content
+  return (
+    <html lang="en">
+      {clerkPublishableKey ? (
+        <ClerkProvider publishableKey={clerkPublishableKey}>
+          {content}
+        </ClerkProvider>
+      ) : (
+        content
+      )}
+    </html>
+  )
 }

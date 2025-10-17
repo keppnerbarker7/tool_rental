@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+
+// Prevent static generation for this search params-dependent page
+export const dynamic = 'force-dynamic'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
