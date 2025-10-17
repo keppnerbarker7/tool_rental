@@ -9,19 +9,26 @@ import { Menu, Zap, X, Home, Settings, HelpCircle, User } from 'lucide-react'
 import { useNetworkStatus } from '@/hooks/useNetworkStatus'
 import { cn } from '@/lib/utils'
 
-// Conditional import for Clerk components
-const isClerkAvailable = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+// Check if Clerk is available at runtime
+function useClerkSafely() {
+  const isClerkAvailable = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
-// Lazy load Clerk components only if available
-let SignedIn: any, SignedOut: any, UserButton: any, SignInButton: any, useUser: any
+  if (!isClerkAvailable) {
+    return { isClerkAvailable: false, user: null }
+  }
 
-if (isClerkAvailable) {
-  const clerk = require('@clerk/nextjs')
-  SignedIn = clerk.SignedIn
-  SignedOut = clerk.SignedOut
-  UserButton = clerk.UserButton
-  SignInButton = clerk.SignInButton
-  useUser = clerk.useUser
+  try {
+    // Dynamic import only if available
+    const { useUser } = require('@clerk/nextjs')
+    const userHook = useUser()
+    return {
+      isClerkAvailable: true,
+      user: userHook?.user || null
+    }
+  } catch (error) {
+    // Hook called outside provider context or Clerk not available
+    return { isClerkAvailable: false, user: null }
+  }
 }
 
 export function Header() {
@@ -29,8 +36,8 @@ export function Header() {
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  // Only use Clerk hooks if available
-  const user = isClerkAvailable && useUser ? useUser().user : null
+  // Safely get Clerk user data
+  const { isClerkAvailable, user } = useClerkSafely()
 
   // Simplified navigation - 3 core pages (Account moved to utility nav)
   const navigation = [
@@ -116,38 +123,26 @@ export function Header() {
           )}
 
           {/* Utility Navigation - Account Link for signed-in users */}
-          {isClerkAvailable && SignedIn && (
-            <SignedIn>
-              <Link
-                href="/account"
-                className="hidden lg:flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors mr-4"
-              >
-                <User className="h-4 w-4 mr-1" />
-                Account
-              </Link>
-            </SignedIn>
+          {isClerkAvailable && user && (
+            <Link
+              href="/account"
+              className="hidden lg:flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors mr-4"
+            >
+              <User className="h-4 w-4 mr-1" />
+              Account
+            </Link>
           )}
 
           {/* User Authentication */}
-          {isClerkAvailable && SignedOut && SignInButton && (
-            <SignedOut>
-              <SignInButton>
-                <Button className="modern-button modern-button-primary px-6 py-3">
-                  Sign In
-                </Button>
-              </SignInButton>
-            </SignedOut>
+          {isClerkAvailable && !user && (
+            <Button className="modern-button modern-button-primary px-6 py-3">
+              Sign In
+            </Button>
           )}
-          {isClerkAvailable && SignedIn && UserButton && (
-            <SignedIn>
-              <UserButton
-                appearance={{
-                  elements: {
-                    avatarBox: "h-10 w-10 rounded-xl shadow-lg"
-                  }
-                }}
-              />
-            </SignedIn>
+          {isClerkAvailable && user && (
+            <div className="h-10 w-10 rounded-xl shadow-lg bg-gray-200 flex items-center justify-center">
+              <User className="h-5 w-5 text-gray-600" />
+            </div>
           )}
 
           {/* Modern Mobile Menu Button */}
@@ -190,25 +185,23 @@ export function Header() {
             ))}
 
             {/* Mobile Account Link - Only show if user is signed in */}
-            {isClerkAvailable && SignedIn && (
-              <SignedIn>
-                <Link
-                  href="/account"
-                  className={cn(
-                    "flex items-center px-4 py-4 rounded-2xl text-lg font-semibold transition-all duration-200",
-                    isCurrentPage('/account')
-                      ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg"
-                      : "text-gray-700 hover:text-gray-900 hover:bg-white/50 hover:shadow-md"
-                  )}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <User className="h-6 w-6 mr-4" />
-                  Account
-                  {isCurrentPage('/account') && (
-                    <div className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                  )}
-                </Link>
-              </SignedIn>
+            {isClerkAvailable && user && (
+              <Link
+                href="/account"
+                className={cn(
+                  "flex items-center px-4 py-4 rounded-2xl text-lg font-semibold transition-all duration-200",
+                  isCurrentPage('/account')
+                    ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg"
+                    : "text-gray-700 hover:text-gray-900 hover:bg-white/50 hover:shadow-md"
+                )}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <User className="h-6 w-6 mr-4" />
+                Account
+                {isCurrentPage('/account') && (
+                  <div className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                )}
+              </Link>
             )}
 
             {/* Mobile Admin Login - Only show if user is admin */}
