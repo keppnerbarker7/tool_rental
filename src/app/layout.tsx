@@ -79,20 +79,32 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <ClerkProvider>
-      <html lang="en">
-        <body>
-          <OfflineIndicator />
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </div>
-        </body>
-      </html>
-    </ClerkProvider>
+  // Only use ClerkProvider if we have the publishable key
+  const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+  const content = (
+    <html lang="en">
+      <body>
+        <OfflineIndicator />
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </div>
+      </body>
+    </html>
   )
+
+  if (clerkPublishableKey) {
+    return (
+      <ClerkProvider publishableKey={clerkPublishableKey}>
+        {content}
+      </ClerkProvider>
+    )
+  }
+
+  // Return content without Clerk if key is not available
+  return content
 }

@@ -7,14 +7,30 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Menu, Zap, X, Home, Settings, HelpCircle, User } from 'lucide-react'
 import { useNetworkStatus } from '@/hooks/useNetworkStatus'
-import { SignedIn, SignedOut, UserButton, SignInButton, useUser } from '@clerk/nextjs'
 import { cn } from '@/lib/utils'
+
+// Conditional import for Clerk components
+const isClerkAvailable = !!process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+// Lazy load Clerk components only if available
+let SignedIn: any, SignedOut: any, UserButton: any, SignInButton: any, useUser: any
+
+if (isClerkAvailable) {
+  const clerk = require('@clerk/nextjs')
+  SignedIn = clerk.SignedIn
+  SignedOut = clerk.SignedOut
+  UserButton = clerk.UserButton
+  SignInButton = clerk.SignInButton
+  useUser = clerk.useUser
+}
 
 export function Header() {
   const { isOnline } = useNetworkStatus()
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const { user } = useUser()
+
+  // Only use Clerk hooks if available
+  const user = isClerkAvailable && useUser ? useUser().user : null
 
   // Simplified navigation - 3 core pages (Account moved to utility nav)
   const navigation = [
@@ -100,33 +116,39 @@ export function Header() {
           )}
 
           {/* Utility Navigation - Account Link for signed-in users */}
-          <SignedIn>
-            <Link
-              href="/account"
-              className="hidden lg:flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors mr-4"
-            >
-              <User className="h-4 w-4 mr-1" />
-              Account
-            </Link>
-          </SignedIn>
+          {isClerkAvailable && SignedIn && (
+            <SignedIn>
+              <Link
+                href="/account"
+                className="hidden lg:flex items-center text-sm text-gray-600 hover:text-gray-900 transition-colors mr-4"
+              >
+                <User className="h-4 w-4 mr-1" />
+                Account
+              </Link>
+            </SignedIn>
+          )}
 
           {/* User Authentication */}
-          <SignedOut>
-            <SignInButton>
-              <Button className="modern-button modern-button-primary px-6 py-3">
-                Sign In
-              </Button>
-            </SignInButton>
-          </SignedOut>
-          <SignedIn>
-            <UserButton
-              appearance={{
-                elements: {
-                  avatarBox: "h-10 w-10 rounded-xl shadow-lg"
-                }
-              }}
-            />
-          </SignedIn>
+          {isClerkAvailable && SignedOut && SignInButton && (
+            <SignedOut>
+              <SignInButton>
+                <Button className="modern-button modern-button-primary px-6 py-3">
+                  Sign In
+                </Button>
+              </SignInButton>
+            </SignedOut>
+          )}
+          {isClerkAvailable && SignedIn && UserButton && (
+            <SignedIn>
+              <UserButton
+                appearance={{
+                  elements: {
+                    avatarBox: "h-10 w-10 rounded-xl shadow-lg"
+                  }
+                }}
+              />
+            </SignedIn>
+          )}
 
           {/* Modern Mobile Menu Button */}
           <Button
@@ -168,24 +190,26 @@ export function Header() {
             ))}
 
             {/* Mobile Account Link - Only show if user is signed in */}
-            <SignedIn>
-              <Link
-                href="/account"
-                className={cn(
-                  "flex items-center px-4 py-4 rounded-2xl text-lg font-semibold transition-all duration-200",
-                  isCurrentPage('/account')
-                    ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg"
-                    : "text-gray-700 hover:text-gray-900 hover:bg-white/50 hover:shadow-md"
-                )}
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <User className="h-6 w-6 mr-4" />
-                Account
-                {isCurrentPage('/account') && (
-                  <div className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                )}
-              </Link>
-            </SignedIn>
+            {isClerkAvailable && SignedIn && (
+              <SignedIn>
+                <Link
+                  href="/account"
+                  className={cn(
+                    "flex items-center px-4 py-4 rounded-2xl text-lg font-semibold transition-all duration-200",
+                    isCurrentPage('/account')
+                      ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg"
+                      : "text-gray-700 hover:text-gray-900 hover:bg-white/50 hover:shadow-md"
+                  )}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <User className="h-6 w-6 mr-4" />
+                  Account
+                  {isCurrentPage('/account') && (
+                    <div className="ml-auto w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                  )}
+                </Link>
+              </SignedIn>
+            )}
 
             {/* Mobile Admin Login - Only show if user is admin */}
             {isAdmin && (
