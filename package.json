@@ -1,0 +1,62 @@
+{
+  "name": "tool_rental",
+  "version": "1.0.0",
+  "description": "A comprehensive tool rental management system.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "lighthouse": "lhci autorun",
+    "lighthouse:ci": "lhci autorun --config=lighthouserc.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keppnerbarker7/tool_rental.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/keppnerbarker7/tool_rental/issues"
+  },
+  "homepage": "https://github.com/keppnerbarker7/tool_rental#readme",
+  "dependencies": {
+    "@clerk/nextjs": "^6.33.3",
+    "@ducanh2912/next-pwa": "^10.2.9",
+    "@hookform/resolvers": "^5.2.2",
+    "@stripe/react-stripe-js": "^5.2.0",
+    "@stripe/stripe-js": "^8.1.0",
+    "@supabase/supabase-js": "^2.75.0",
+    "@types/node": "^24.6.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "autoprefixer": "^10.4.21",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "eslint": "^9.36.0",
+    "eslint-config-next": "^15.5.4",
+    "lucide-react": "^0.544.0",
+    "next": "^15.5.4",
+    "postcss": "^8.5.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.63.0",
+    "resend": "^6.1.3",
+    "stripe": "^19.1.0",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "^3.4.18",
+    "typescript": "^5.9.3",
+    "zod": "^4.1.11"
+  },
+  "devDependencies": {
+    "@lhci/cli": "^0.15.1"
+  }
+}

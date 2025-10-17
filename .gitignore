@@ -10,6 +10,11 @@ node_modules/
 /build
 /dist
 
+# Next.js
+.next/
+out/
+next-env.d.ts
+
 # Environment variables
 .env
 .env.local
@@ -65,3 +70,5 @@ venv.bak/
 .Rhistory
 .RData
 .Ruserdata
+# clerk configuration (can include secrets)
+/.clerk/

@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Modern Color Palette */
+  --background: 0 0% 100%;
+  --foreground: 216 12% 8%;
+  --card: 0 0% 100%;
+  --card-foreground: 216 12% 8%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 216 12% 8%;
+
+  /* Vibrant Accent Colors */
+  --primary: 197 92% 50%; /* Bright Teal */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 217 91% 60%; /* Royal Blue */
+  --secondary-foreground: 0 0% 100%;
+  --accent: 84 81% 56%; /* Lime Green */
+  --accent-foreground: 216 12% 8%;
+  --accent-orange: 25 95% 53%; /* Vibrant Orange */
+  --accent-orange-foreground: 0 0% 100%;
+
+  /* Neutral Colors */
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 8.9% 46.1%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 197 92% 50%;
+
+  /* Design System */
+  --radius: 12px;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.dark {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 4.9%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  font-variation-settings: normal;
+  letter-spacing: -0.01em;
+}
+
+/* Modern Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+}
+
+/* Modern Components */
+.modern-card {
+  @apply bg-white rounded-2xl shadow-lg border-0 overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+}
+
+.modern-button {
+  @apply px-6 py-3 rounded-full font-semibold transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-opacity-50;
+}
+
+.modern-button-primary {
+  @apply bg-gradient-to-r from-cyan-500 to-teal-500 text-white shadow-lg hover:shadow-xl focus:ring-cyan-500;
+}
+
+.modern-button-secondary {
+  @apply bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg hover:shadow-xl focus:ring-blue-500;
+}
+
+.modern-button-accent {
+  @apply bg-gradient-to-r from-lime-500 to-green-500 text-gray-900 shadow-lg hover:shadow-xl focus:ring-lime-500;
+}
+
+.modern-button-orange {
+  @apply bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-lg hover:shadow-xl focus:ring-orange-500;
+}
+
+.modern-input {
+  @apply rounded-xl border-2 border-gray-200 px-4 py-3 text-base transition-colors duration-200 focus:border-cyan-500 focus:ring-0 focus:outline-none;
+}
+
+.glass-effect {
+  @apply bg-white/80 backdrop-blur-md border border-white/20;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.teal-gradient {
+  background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+}
+
+.lime-gradient {
+  background: linear-gradient(135deg, #84cc16 0%, #65a30d 100%);
+}
+
+.orange-gradient {
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.4); }
+  50% { box-shadow: 0 0 30px rgba(6, 182, 212, 0.7); }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #06b6d4, #0891b2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #0891b2, #0e7490);
+}

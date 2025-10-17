@@ -1,0 +1,14 @@
+[
+  {
+    "url": "http://localhost:3000/",
+    "isRepresentativeRun": true,
+    "htmlPath": "/Users/mac/Documents/STRAT 490R Folder/tool_rental/lighthouse-reports/localhost--2025_10_14_19_00_28.report.html",
+    "jsonPath": "/Users/mac/Documents/STRAT 490R Folder/tool_rental/lighthouse-reports/localhost--2025_10_14_19_00_28.report.json",
+    "summary": {
+      "performance": 0.36,
+      "accessibility": 0.9,
+      "best-practices": 0.96,
+      "seo": 1
+    }
+  }
+]
