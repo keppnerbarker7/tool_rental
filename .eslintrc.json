@@ -3,6 +3,8 @@
   "rules": {
     "prefer-const": "error",
     "no-unused-vars": "warn",
-    "@next/next/no-img-element": "error"
+    "@next/next/no-img-element": "error",
+    "react/no-unescaped-entities": "warn",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }

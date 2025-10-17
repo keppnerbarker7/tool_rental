@@ -198,7 +198,7 @@ export default function FAQPage() {
             How Can We Help?
           </h1>
           <p className="text-xl md:text-2xl text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-            Find answers to common questions about our tool rental service. Can't find what you're looking for? Contact us!
+            Find answers to common questions about our tool rental service. Can't find what you&apos;re looking for? Contact us!
           </p>
 
           {/* Search Bar */}
@@ -303,7 +303,7 @@ export default function FAQPage() {
             <CardContent className="py-12 px-8 text-center">
               <h2 className="text-3xl font-bold mb-4">Still Need Help?</h2>
               <p className="text-blue-100 mb-8 max-w-2xl mx-auto text-lg">
-                Can't find the answer you're looking for? Our support team is here to help you with any questions about tool rentals.
+                Can't find the answer you&apos;re looking for? Our support team is here to help you with any questions about tool rentals.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="bg-white text-blue-700 hover:bg-slate-100" asChild>

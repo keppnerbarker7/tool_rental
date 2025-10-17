@@ -330,7 +330,7 @@ export default function CheckoutPage() {
                   Contact Information
                 </CardTitle>
                 <p className="text-sm text-gray-600 mt-2">
-                  We'll send your receipt and access code to these details
+                  We&apos;ll send your receipt and access code to these details
                 </p>
               </CardHeader>
               <CardContent className="space-y-4">

@@ -113,7 +113,7 @@ export default function ContactPage() {
             </div>
             <h2 className="text-2xl font-bold mb-4 text-slate-900">Message Sent!</h2>
             <p className="text-slate-600 mb-6">
-              Thank you for contacting us. We'll get back to you within 2 hours during business hours.
+              Thank you for contacting us. We&apos;ll get back to you within 2 hours during business hours.
             </p>
             <Button asChild>
               <Link href="/">Return Home</Link>

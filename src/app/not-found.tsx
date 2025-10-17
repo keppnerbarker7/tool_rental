@@ -55,7 +55,7 @@ export default function NotFound() {
             </h1>
 
             <p className="text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-              The page you're looking for doesn't exist or may have been moved.
+              The page you&apos;re looking for doesn't exist or may have been moved.
               Let's get you back to finding the tools you need!
             </p>
 
@@ -123,7 +123,7 @@ export default function NotFound() {
         {/* Help Section */}
         <div className="text-center mt-8">
           <p className="text-slate-600 mb-4">
-            Still can't find what you're looking for?
+            Still can&apos;t find what you&apos;re looking for?
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button variant="ghost" asChild>

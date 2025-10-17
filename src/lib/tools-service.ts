@@ -113,7 +113,7 @@ export function searchTools(
         }
       }
 
-      return [...new Set(terms)] // Remove duplicates
+      return Array.from(new Set(terms)) // Remove duplicates
     }
 
     const searchTerms = getRelatedTerms(searchLower)
@@ -124,7 +124,6 @@ export function searchTools(
         tool.description,
         tool.brand || '',
         tool.category,
-        ...(tool.tags || [])
       ].join(' ').toLowerCase()
 
       // Check if any search term matches

@@ -311,7 +311,7 @@ export default function SupportPage() {
             <Card className="lg:col-span-2 modern-card">
               <CardHeader>
                 <CardTitle className="text-2xl">Send us a Message</CardTitle>
-                <CardDescription>We'll respond within 2 hours during business hours</CardDescription>
+                <CardDescription>We&apos;ll respond within 2 hours during business hours</CardDescription>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-4">

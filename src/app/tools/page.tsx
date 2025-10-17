@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { SlidersHorizontal } from 'lucide-react'
 import { searchTools, getAllCategories } from '@/lib/tools-service'
-import type { Tool } from '@/types'
+import type { Tool, ToolCategory } from '@/types'
 
 export default function ToolsPage() {
   const searchParams = useSearchParams()
@@ -32,7 +32,7 @@ export default function ToolsPage() {
     }
 
     if (urlCategory) {
-      setFilters(prev => ({ ...prev, category: urlCategory }))
+      setFilters(prev => ({ ...prev, category: urlCategory as ToolCategory }))
     }
   }, [searchParams])
 
