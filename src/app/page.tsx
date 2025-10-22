@@ -551,14 +551,6 @@ export default function Home() {
                 <CheckCircle className="h-5 w-5 text-green-400" />
                 <span className="font-medium">Pro Quality</span>
               </div>
-              <Link
-                href="/admin"
-                className="flex items-center gap-2 text-white/40 hover:text-white/80 transition-colors duration-300"
-                title="Admin Access"
-              >
-                <CheckCircle className="h-5 w-5" />
-                <span className="font-medium">Admin Portal</span>
-              </Link>
             </div>
           </div>
         </div>
