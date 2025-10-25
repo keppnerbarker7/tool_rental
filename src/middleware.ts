@@ -3,10 +3,14 @@ import { NextResponse } from "next/server";
 
 // Public routes that don't require authentication
 const isPublicRoute = createRouteMatcher([
+  '/',
   '/sign-in(.*)',
   '/sign-up(.*)',
   '/sign-out(.*)',
   '/api/health(.*)',
+  '/tools(.*)',
+  '/about(.*)',
+  '/support(.*)',
 ]);
 
 // Admin routes requiring ADMIN role
